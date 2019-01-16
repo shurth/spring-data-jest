@@ -42,6 +42,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.collapse.CollapseBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
@@ -1265,6 +1266,11 @@ public class JestElasticsearchTemplate implements ElasticsearchOperations, Appli
 		if (query.getMinScore() > 0) {
 			searchSourceBuilder.minScore(query.getMinScore());
 		}
+		
+		if (query.getCollapseField() != null) {
+			searchSourceBuilder.collapse(new CollapseBuilder(query.getCollapseField()));
+		}
+		
 		return searchSourceBuilder;
 	}
 
